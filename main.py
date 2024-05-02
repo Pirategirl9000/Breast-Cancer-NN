@@ -6,16 +6,22 @@ input_layer_neurons = 1
 hidden_layer_1_neurons = 1
 
 ds_x = pd.read_csv("wdbc.csv")
-ds_y = ds_x.pop(0)
+ds_x.dropna()
+ds_x.pop('ID')
+ds_y = ds_x.pop('Diagnosis')
 
-(x_train, x_test), (y_train, y_test) = train_test_split(ds_x, ds_y)
+print(ds_x.shape)
+print(ds_y.shape)
+
+x_train, x_test, y_train, y_test = train_test_split(ds_x, ds_y, train_size=0.7)
+
 
 biases = np.zeros(shape=(hidden_layer_1_neurons, 1))
 weights = np.randn(axis=1, shape=(input_layer_neurons, x_train.length))
 
 def forward_propagation(w, b, x1):
   y1 = np.sum(np.multiply(w[0], x1), b[0])
-  x2 = np.sum(1 / (1 + np.exp(y1)) #sigmoid activation
+  x2 = np.sum(1 / (1 + np.exp(y1))) #sigmoid activation
   y2 = np.sum(np.multiply(w[1], x1), b[1])
 
   return y1, x2, y2
@@ -40,5 +46,5 @@ for i in range(100):
   weights, biases, loss = back_propagation(weights, biases, x_train, y1, x2, y2, 0.01, y_train)
 
   if i % 10 == 0:
-    print(f"Actual Value: {y_train[i]}, Predicted Value: {y2[i}, loss: {loss}")
+    print(f"Actual Value: {y_train[i]}, Predicted Value: {y2[i]}, loss: {loss}")
   
