@@ -17,7 +17,7 @@ x_train, x_test, y_train, y_test = train_test_split(ds_x, ds_y, train_size=0.7)
 
 
 biases = np.zeros(shape=(hidden_layer_1_neurons, 1))
-weights = np.randn(axis=1, shape=(input_layer_neurons, x_train.length))
+weights = np.random.randn(axis=1, shape=(input_layer_neurons, x_train.shape))
 
 def forward_propagation(w, b, x1):
   y1 = np.sum(np.multiply(w[0], x1), b[0])
